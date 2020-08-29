@@ -18,6 +18,13 @@ public class Hour {
     @Expose
     private String badgeUrl;
 
+    public Hour(String name, int hours, String country, String badgeUrl) {
+        this.name = name;
+        this.hours = hours;
+        this.country = country;
+        this.badgeUrl = badgeUrl;
+    }
+
     public String getName() {
         return name;
     }
@@ -50,4 +57,13 @@ public class Hour {
         this.badgeUrl = badgeUrl;
     }
 
+    @Override
+    public String toString() {
+        return "Hour{" +
+                "name='" + name + '\'' +
+                ", hours=" + hours +
+                ", country='" + country + '\'' +
+                ", badgeUrl='" + badgeUrl + '\'' +
+                '}';
+    }
 }

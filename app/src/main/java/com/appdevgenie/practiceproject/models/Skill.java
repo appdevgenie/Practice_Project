@@ -1,49 +1,28 @@
 package com.appdevgenie.practiceproject.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Skill implements Parcelable {
+public class Skill {
 
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("score")
     @Expose
-    private Integer score;
+    private int score;
     @SerializedName("country")
     @Expose
     private String country;
     @SerializedName("badgeUrl")
     @Expose
     private String badgeUrl;
-    public final static Parcelable.Creator<Skill> CREATOR = new Creator<Skill>() {
 
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public Skill createFromParcel(Parcel in) {
-            return new Skill(in);
-        }
-
-        public Skill[] newArray(int size) {
-            return (new Skill[size]);
-        }
-
-    };
-
-    protected Skill(Parcel in) {
-        this.name = ((String) in.readValue((String.class.getClassLoader())));
-        this.score = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.country = ((String) in.readValue((String.class.getClassLoader())));
-        this.badgeUrl = ((String) in.readValue((String.class.getClassLoader())));
-    }
-
-    public Skill() {
+    public Skill(String name, int score, String country, String badgeUrl) {
+        this.name = name;
+        this.score = score;
+        this.country = country;
+        this.badgeUrl = badgeUrl;
     }
 
     public String getName() {
@@ -54,11 +33,11 @@ public class Skill implements Parcelable {
         this.name = name;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -78,15 +57,13 @@ public class Skill implements Parcelable {
         this.badgeUrl = badgeUrl;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(name);
-        dest.writeValue(score);
-        dest.writeValue(country);
-        dest.writeValue(badgeUrl);
+    @Override
+    public String toString() {
+        return "Skill{" +
+                "name='" + name + '\'' +
+                ", score=" + score +
+                ", country='" + country + '\'' +
+                ", badgeUrl='" + badgeUrl + '\'' +
+                '}';
     }
-
-    public int describeContents() {
-        return 0;
-    }
-
 }
