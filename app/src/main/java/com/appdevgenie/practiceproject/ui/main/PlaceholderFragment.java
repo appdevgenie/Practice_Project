@@ -1,18 +1,25 @@
 package com.appdevgenie.practiceproject.ui.main;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.appdevgenie.practiceproject.R;
+import com.appdevgenie.practiceproject.models.Hour;
+import com.appdevgenie.practiceproject.service.LearnerDataInterface;
+import com.appdevgenie.practiceproject.service.RetrofitInstance;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -47,13 +54,33 @@ public class PlaceholderFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
-        final TextView textView = root.findViewById(R.id.section_label);
+        /*final TextView textView = root.findViewById(R.id.section_label);
         pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
+        checkRetrofitResponse();
         return root;
+    }
+
+    private void checkRetrofitResponse() {
+
+        LearnerDataInterface learnerDataInterface = RetrofitInstance.getServiceInterface();
+        Call<List<Hour>> hourCall = learnerDataInterface.getLearningHours();
+
+        hourCall.enqueue(new Callback<List<Hour>>() {
+            @Override
+            public void onResponse(Call<List<Hour>> call, Response<List<Hour>> response) {
+                Log.d("RetroTest", "onResponse:" + response.toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Hour>> call, Throwable t) {
+                Log.d("RetroTest", "onResponse: failed" + t.getMessage());
+            }
+        });
     }
 }
