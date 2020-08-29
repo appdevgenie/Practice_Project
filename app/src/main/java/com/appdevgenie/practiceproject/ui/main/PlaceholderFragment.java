@@ -53,7 +53,7 @@ public class PlaceholderFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         /*final TextView textView = root.findViewById(R.id.section_label);
         pageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -61,11 +61,11 @@ public class PlaceholderFragment extends Fragment {
                 textView.setText(s);
             }
         });*/
-        checkRetrofitResponse();
+        //checkRetrofitResponse();
         return root;
     }
 
-    private void checkRetrofitResponse() {
+    /*private void checkRetrofitResponse() {
 
         LearnerDataInterface learnerDataInterface = RetrofitInstance.getServiceInterface();
         Call<List<Hour>> hourCall = learnerDataInterface.getLearningHours();
@@ -82,5 +82,5 @@ public class PlaceholderFragment extends Fragment {
                 Log.d("RetroTest", "onResponse: failed" + t.getMessage());
             }
         });
-    }
+    }*/
 }
