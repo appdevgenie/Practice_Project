@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +18,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appdevgenie.practiceproject.models.PostInfo;
+import com.appdevgenie.practiceproject.service.LearnerDataInterface;
+import com.appdevgenie.practiceproject.service.RetrofitInstance;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ProjectSubmissionActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String FIRST_NAME = "Eugene";
@@ -24,7 +35,13 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
     public static final String EMAIL_ADDRESS = "appdevgenie@gmail.com";
     public static final String GITHUB_LINK = "https://github.com/appdevgenie/Practice_Project";
 
+    public static final String TAG = "ProjectSubmission";
+
     private Context context;
+    private EditText etFirstName;
+    private EditText etLastName;
+    private EditText etEmail;
+    private EditText etGithubLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +56,13 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
         Button buttonSubmit = findViewById(R.id.button_submit);
         buttonSubmit.setOnClickListener(this);
 
-        EditText etFirstName = findViewById(R.id.editTextSubmitFirstName);
+        etFirstName = findViewById(R.id.editTextSubmitFirstName);
         etFirstName.setText(FIRST_NAME);
-        EditText etLastName = findViewById(R.id.editTextSubmitLastName);
+        etLastName = findViewById(R.id.editTextSubmitLastName);
         etLastName.setText(LAST_NAME);
-        EditText etEmail = findViewById(R.id.editTextSubmitEmalAddress);
+        etEmail = findViewById(R.id.editTextSubmitEmalAddress);
         etEmail.setText(EMAIL_ADDRESS);
-        EditText etGithubLink = findViewById(R.id.editTextSubmitGithubLink);
+        etGithubLink = findViewById(R.id.editTextSubmitGithubLink);
         etGithubLink.setText(GITHUB_LINK);
     }
 
@@ -80,7 +97,8 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: POST info with retrofit
+
+                postRetrofitResponse();
                 //Toast.makeText(getApplicationContext(), "Posting info", Toast.LENGTH_SHORT).show();
 
                 alertDialog.dismiss();
@@ -96,6 +114,39 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
+            }
+        });
+    }
+
+    private void postRetrofitResponse() {
+
+        String firstName = etFirstName.getText().toString();
+        String lastName = etLastName.getText().toString();
+        String email = etEmail.getText().toString();
+        String github = etGithubLink.getText().toString();
+
+        LearnerDataInterface learnerDataInterface = RetrofitInstance.postServiceInterface();
+        Call<Void> postCall = learnerDataInterface.postPracticeProject(firstName, lastName, email, github);
+
+        postCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d(TAG, "onResponse: " + response.toString());
+                if(response.isSuccessful()){
+                    //success
+                    showResultDialog(R.drawable.ic_tick_green, "Submission successful");
+                }else{
+                    //unsuccessful
+                    showResultDialog(R.drawable.ic_warning_red, "Submission not successful");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                //unsuccessful
+                showResultDialog(R.drawable.ic_warning_red, "Submission not successful");
+                Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
     }
