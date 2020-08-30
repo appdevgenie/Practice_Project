@@ -22,8 +22,11 @@ Working with Google Form and many more...
 ## Resources
 
 The data obtained making a network request the following API endpoints.
+
 Base URL - https://gadsapi.herokuapp.com
+
 Learning Leaders - /api/hours
+
 Skill IQ Leaders - /api/skilliq
 
 ## Screenshots
