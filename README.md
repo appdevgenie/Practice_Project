@@ -4,6 +4,28 @@
 
 Associate Android Developer Practice Project
 
+## Description
+
+This project is a very simple Android Project aimed at getting you to implement some simple concepts that are very important as far as Android Development is concerned.
+
+In this project, you are going to implement a mobile design of the GADS 2020 Leaderboard.
+The mobile App will display Top 20 learners in the Learning Leaders’ category and Top 20 learners in the Skill IQ Leaders’ category.
+
+This project will help you understand:
+Multi-Activity Project
+View pager
+Customizing Toolbar
+RecyclerView
+Making Network Request
+Working with Google Form and many more...
+
+## Resources
+
+The data obtained making a network request the following API endpoints.
+Base URL - https://gadsapi.herokuapp.com
+Learning Leaders - /api/hours
+Skill IQ Leaders - /api/skilliq
+
 ## Screenshots
 
 ![device-2020-08-30-130232](https://user-images.githubusercontent.com/39134030/91658114-a91e9780-eac6-11ea-93e1-b55d4c68dc1d.png)
