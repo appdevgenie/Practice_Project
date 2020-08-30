@@ -1,5 +1,6 @@
 package com.appdevgenie.practiceproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.appdevgenie.practiceproject.models.Hour;
@@ -14,8 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.appdevgenie.practiceproject.ui.main.SectionsPagerAdapter;
 
@@ -47,8 +50,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        Button buttonSubmit = findViewById(R.id.button_submit);
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ProjectSubmissionActivity.class));
+            }
+        });
 
     }
 
-
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }*/
 }
