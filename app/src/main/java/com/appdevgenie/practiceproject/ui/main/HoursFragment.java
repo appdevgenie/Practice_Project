@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.appdevgenie.practiceproject.R;
 import com.appdevgenie.practiceproject.adapters.LearnerHoursRecyclerAdapter;
@@ -34,6 +35,7 @@ public class HoursFragment extends Fragment {
 
     public static final String TAG = "HoursFragment";
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private HoursViewModel mViewModel;
     private RecyclerView recyclerView;
     private LearnerHoursRecyclerAdapter adapter;
@@ -50,7 +52,17 @@ public class HoursFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+
         getRetrofitResponse();
+
+        swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRetrofitResponse();
+            }
+        });
         return view;
     }
 
@@ -72,6 +84,8 @@ public class HoursFragment extends Fragment {
                 Log.d(TAG, "onResponse:" + response.toString());
 
                 progressDialog.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
+
                 if (response.isSuccessful()) {
                     List<Hour> hourList = response.body();
                     hours = (ArrayList<Hour>) hourList;
@@ -85,6 +99,7 @@ public class HoursFragment extends Fragment {
             public void onFailure(Call<List<Hour>> call, Throwable t) {
                 Log.d(TAG, "onResponse: failed" + t.getMessage());
                 progressDialog.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 

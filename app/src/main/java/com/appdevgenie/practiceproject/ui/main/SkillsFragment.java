@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class SkillsFragment extends Fragment {
 
     public static final String TAG = "SkillsFragment";
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private SkillsViewModel mViewModel;
     private RecyclerView recyclerView;
     private LearnerSkillsRecyclerAdapter adapter;
@@ -51,6 +53,14 @@ public class SkillsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         getRetrofitResponse();
+        swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getRetrofitResponse();
+            }
+        });
         return view;
     }
 
@@ -64,6 +74,8 @@ public class SkillsFragment extends Fragment {
             public void onResponse(Call<List<Skill>> call, Response<List<Skill>> response) {
                 Log.d(TAG, "onResponse:" + response.toString());
 
+                swipeRefreshLayout.setRefreshing(false);
+
                 List<Skill> hourList = response.body();
                 skills = (ArrayList<Skill>) hourList;
                 populateRecyclerView();
@@ -72,6 +84,7 @@ public class SkillsFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Skill>> call, Throwable t) {
                 Log.d(TAG, "onResponse: failed" + t.getMessage());
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
