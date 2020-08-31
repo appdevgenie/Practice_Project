@@ -1,8 +1,5 @@
 package com.appdevgenie.practiceproject;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -16,13 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.appdevgenie.practiceproject.models.PostInfo;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.appdevgenie.practiceproject.service.LearnerDataInterface;
 import com.appdevgenie.practiceproject.service.RetrofitInstance;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

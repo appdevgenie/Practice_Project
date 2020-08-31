@@ -2,62 +2,65 @@ package com.appdevgenie.practiceproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.appdevgenie.practiceproject.models.Hour;
-import com.appdevgenie.practiceproject.service.LearnerDataInterface;
-import com.appdevgenie.practiceproject.service.RetrofitInstance;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.appdevgenie.practiceproject.ui.main.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
+import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class MainActivity extends AppCompatActivity implements InternetConnectivityListener {
 
-public class MainActivity extends AppCompatActivity {
+    private ImageView ivNetwork;
+    private Button buttonSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
+        ivNetwork = findViewById(R.id.image_view_no_network);
+        ivNetwork.setVisibility(View.INVISIBLE);
+        buttonSubmit = findViewById(R.id.button_submit);
+        buttonSubmit.setVisibility(View.VISIBLE);
 
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-       /* FloatingActionButton fab = findViewById(R.id.fab);
+        InternetAvailabilityChecker.init(this);
+        InternetAvailabilityChecker internetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+        internetAvailabilityChecker.addInternetConnectivityListener(this);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        buttonSubmit.setOnClickListener(view ->
+                startActivity(new Intent(MainActivity.this, ProjectSubmissionActivity.class)));
 
-        Button buttonSubmit = findViewById(R.id.button_submit);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ProjectSubmissionActivity.class));
-            }
-        });
+    }
 
+    @Override
+    public void onInternetConnectivityChanged(boolean isConnected) {
+        if (isConnected) {
+            ivNetwork.setVisibility(View.INVISIBLE);
+            buttonSubmit.setVisibility(View.VISIBLE);
+
+            SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+            ViewPager viewPager = findViewById(R.id.view_pager);
+            viewPager.setAdapter(sectionsPagerAdapter);
+
+            TabLayout tabs = findViewById(R.id.tabs);
+            tabs.setupWithViewPager(viewPager);
+
+        }
+        else {
+            ivNetwork.setVisibility(View.VISIBLE);
+            buttonSubmit.setVisibility(View.INVISIBLE);
+
+            Toast.makeText(this, "Network connection lost!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /*@Override

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.appdevgenie.practiceproject"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -38,6 +38,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
+
+    // network connectivity checker
+    implementation 'com.treebo:internetavailabilitychecker:1.0.4'
 
     //cardview
     implementation 'androidx.cardview:cardview:1.0.0'
