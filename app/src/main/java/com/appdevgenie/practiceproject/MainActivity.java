@@ -62,5 +62,5 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             Toast.makeText(this, "Network connection lost!", Toast.LENGTH_SHORT).show();
         }
     }
-    
+
 }
