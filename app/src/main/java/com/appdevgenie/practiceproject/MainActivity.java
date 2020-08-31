@@ -62,11 +62,5 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             Toast.makeText(this, "Network connection lost!", Toast.LENGTH_SHORT).show();
         }
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }*/
+    
 }
