@@ -1,17 +1,16 @@
 package com.appdevgenie.practiceproject.ui.main;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,28 +19,24 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.appdevgenie.practiceproject.R;
 import com.appdevgenie.practiceproject.adapters.LearnerHoursRecyclerAdapter;
 import com.appdevgenie.practiceproject.models.Hour;
-import com.appdevgenie.practiceproject.service.LearnerDataInterface;
-import com.appdevgenie.practiceproject.service.RetrofitInstance;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 
 public class HoursFragment extends Fragment {
 
-    public static final String TAG = "HoursFragment";
+    public static final String TAG = HoursFragment.class.getSimpleName();
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private HoursViewModel mViewModel;
+    private HoursViewModel hoursViewModel;
     private RecyclerView recyclerView;
     private LearnerHoursRecyclerAdapter adapter;
     private View view;
     private ArrayList<Hour> hours;
     private Context context;
+    //private ProgressDialog progressDialog;
+    private ProgressBar progressBar;
 
     public static HoursFragment newInstance() {
         return new HoursFragment();
@@ -52,23 +47,43 @@ public class HoursFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+        init();
+        return view;
+    }
 
-        getRetrofitResponse();
+    private void init() {
+
+        context = getActivity();
+
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+        /*progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please Wait...");*/
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        adapter = new LearnerHoursRecyclerAdapter(context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+       // getRetrofitResponse();
+        observeData();
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getRetrofitResponse();
+                //getRetrofitResponse();
+                progressBar.setVisibility(View.VISIBLE);
+                observeData();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
-        return view;
     }
 
-    private void getRetrofitResponse() {
-
-        context = getActivity();
+    /*private void getRetrofitResponse() {
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
@@ -84,12 +99,13 @@ public class HoursFragment extends Fragment {
                 Log.d(TAG, "onResponse:" + response.toString());
 
                 progressDialog.dismiss();
-                swipeRefreshLayout.setRefreshing(false);
+                //swipeRefreshLayout.setRefreshing(false);
 
                 if (response.isSuccessful()) {
                     List<Hour> hourList = response.body();
                     hours = (ArrayList<Hour>) hourList;
-                    populateRecyclerView();
+                    adapter.setHourArrayList(hours);
+                    //populateRecyclerView();
                 } else {
                     Toast.makeText(getActivity(), "Something went wrong!!!!", Toast.LENGTH_SHORT).show();
                 }
@@ -99,29 +115,59 @@ public class HoursFragment extends Fragment {
             public void onFailure(Call<List<Hour>> call, Throwable t) {
                 Log.d(TAG, "onResponse: failed" + t.getMessage());
                 progressDialog.dismiss();
-                swipeRefreshLayout.setRefreshing(false);
+                //swipeRefreshLayout.setRefreshing(false);
             }
         });
 
-    }
+    }*/
 
-    private void populateRecyclerView() {
+    /*private void initRecyclerView() {
 
         context = getActivity();
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new LearnerHoursRecyclerAdapter(context, hours);
+        adapter = new LearnerHoursRecyclerAdapter(context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
+        //adapter.notifyDataSetChanged();
+    }*/
 
-    @Override
+    /*@Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HoursViewModel.class);
-        // TODO: Use the ViewModel
+        //viewModel = ViewModelProviders.of(this).get(HoursViewModel.class);
+
+        observeData();
+        *//*
+        viewModel.getHoursInfo().observe(getViewLifecycleOwner(), new Observer<List<Hour>>() {
+            @Override
+            public void onChanged(List<Hour> hours) {
+                if (hours != null) {
+                    adapter.setHourArrayList((ArrayList<Hour>) hours);
+                }
+            }
+        });*//*
+    }*/
+
+    private void observeData() {
+
+        //progressDialog.show();
+
+        hoursViewModel = ViewModelProviders.of(this).get(HoursViewModel.class);
+        hoursViewModel.getHoursInfo().observe(getViewLifecycleOwner(), new Observer<List<Hour>>() {
+            @Override
+            public void onChanged(List<Hour> hours) {
+                if (hours != null) {
+                    adapter.setHourArrayList((ArrayList<Hour>) hours);
+                    progressBar.setVisibility(View.GONE);
+                    //progressDialog.dismiss();
+                }
+            }
+        });
+
+
+
     }
 
 }

@@ -1,7 +1,6 @@
 package com.appdevgenie.practiceproject.service;
 
 import com.appdevgenie.practiceproject.models.Hour;
-import com.appdevgenie.practiceproject.models.PostInfo;
 import com.appdevgenie.practiceproject.models.Skill;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import retrofit2.http.POST;
 
 public interface LearnerDataInterface {
 
+    //TODO: create constants class in utils
     String FIRST_NAME = "entry.1877115667";
     String LAST_NAME = "entry.2006916086";
     String EMAIL = "entry.1824927963";

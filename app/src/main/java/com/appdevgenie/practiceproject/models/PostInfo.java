@@ -3,6 +3,7 @@ package com.appdevgenie.practiceproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+//TODO: redundant delete on clean up
 public class PostInfo {
 
     @SerializedName("Name")

@@ -5,8 +5,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,9 +20,8 @@ public class LearnerHoursRecyclerAdapter extends RecyclerView.Adapter<LearnerVie
     private Context context;
     private ArrayList<Hour> hourArrayList;
 
-    public LearnerHoursRecyclerAdapter(Context context, ArrayList<Hour> hourArrayList) {
+    public LearnerHoursRecyclerAdapter(Context context) {
         this.context = context;
-        this.hourArrayList = hourArrayList;
     }
 
     @NonNull
@@ -45,6 +42,11 @@ public class LearnerHoursRecyclerAdapter extends RecyclerView.Adapter<LearnerVie
                 .load(hour.getBadgeUrl())
                 .placeholder(R.drawable.loading)
                 .into(holder.imageView);
+    }
+
+    public void setHourArrayList(ArrayList<Hour> hourArrayList) {
+        this.hourArrayList = hourArrayList;
+        notifyDataSetChanged();
     }
 
     @Override

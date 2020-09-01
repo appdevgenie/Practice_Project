@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdevgenie.practiceproject.R;
-import com.appdevgenie.practiceproject.models.Hour;
 import com.appdevgenie.practiceproject.models.Skill;
 import com.bumptech.glide.Glide;
 
@@ -21,9 +20,8 @@ public class LearnerSkillsRecyclerAdapter extends RecyclerView.Adapter<LearnerVi
     private Context context;
     private ArrayList<Skill> skillArrayList;
 
-    public LearnerSkillsRecyclerAdapter(Context context, ArrayList<Skill> skillArrayList) {
+    public LearnerSkillsRecyclerAdapter(Context context) {
         this.context = context;
-        this.skillArrayList = skillArrayList;
     }
 
     @NonNull
@@ -44,6 +42,11 @@ public class LearnerSkillsRecyclerAdapter extends RecyclerView.Adapter<LearnerVi
                 .load(skill.getBadgeUrl())
                 .placeholder(R.drawable.loading)
                 .into(holder.imageView);
+    }
+
+    public void setSkillArrayList(ArrayList<Skill> skillArrayList) {
+        this.skillArrayList = skillArrayList;
+        notifyDataSetChanged();
     }
 
     @Override

@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         else {
             ivNetwork.setVisibility(View.VISIBLE);
             buttonSubmit.setVisibility(View.INVISIBLE);
-
             Toast.makeText(this, "Network connection lost!", Toast.LENGTH_SHORT).show();
         }
     }
