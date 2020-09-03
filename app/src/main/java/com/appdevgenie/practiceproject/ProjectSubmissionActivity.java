@@ -1,5 +1,6 @@
 package com.appdevgenie.practiceproject;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -81,8 +82,21 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
         AlertDialog.Builder builder = new AlertDialog.Builder(ProjectSubmissionActivity.this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_submit_confirm, null);
 
+        TextView tvConfirm = dialogView.findViewById(R.id.textViewConfirm);
+        ObjectAnimator animation3 = ObjectAnimator.ofFloat(tvConfirm, "translationX", 100, 0);
+        animation3.setStartDelay(300);
+        animation3.setDuration(800);
+        animation3.start();
         Button buttonConfirm = dialogView.findViewById(R.id.button_confirm);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(buttonConfirm, "translationX", 100, 0);
+        animation.setStartDelay(300);
+        animation.setDuration(800);
+        animation.start();
         ImageButton buttonCancel = dialogView.findViewById(R.id.image_button_cancel);
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(buttonCancel, "translationX", 50, 0);
+        animation2.setStartDelay(300);
+        animation2.setDuration(800);
+        animation2.start();
 
         builder.setView(dialogView);
         AlertDialog alertDialog = builder.create();
@@ -159,6 +173,9 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
 
         ImageView imageView = dialog.findViewById(R.id.image_view_result);
         imageView.setImageResource(imageResource);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(imageView, "alpha", 0, 1);
+        animation.setDuration(1500);
+        animation.start();
 
         dialog.show();
     }
