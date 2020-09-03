@@ -20,6 +20,8 @@ import com.appdevgenie.practiceproject.adapters.LearnerSkillsRecyclerAdapter;
 import com.appdevgenie.practiceproject.models.Skill;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SkillsFragment extends Fragment {
@@ -110,9 +112,15 @@ public class SkillsFragment extends Fragment {
         skillsViewModel = ViewModelProviders.of(this).get(SkillsViewModel.class);
         skillsViewModel.getSkillsData().observe(getViewLifecycleOwner(), new Observer<List<Skill>>() {
             @Override
-            public void onChanged(List<Skill> hours) {
-                if (hours != null) {
-                    adapter.setSkillArrayList((ArrayList<Skill>) hours);
+            public void onChanged(List<Skill> skills) {
+                if (skills != null) {
+                    Collections.sort(skills, new Comparator<Skill>() {
+                        @Override
+                        public int compare(Skill s1, Skill s2) {
+                            return (s2.getScore() - s1.getScore());
+                        }
+                    });
+                    adapter.setSkillArrayList((ArrayList<Skill>) skills);
                     //progressBar.setVisibility(View.GONE);
 
                 }

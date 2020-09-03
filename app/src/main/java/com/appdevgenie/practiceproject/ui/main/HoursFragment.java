@@ -21,6 +21,9 @@ import com.appdevgenie.practiceproject.adapters.LearnerHoursRecyclerAdapter;
 import com.appdevgenie.practiceproject.models.Hour;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -159,6 +162,12 @@ public class HoursFragment extends Fragment {
             @Override
             public void onChanged(List<Hour> hours) {
                 if (hours != null) {
+                   Collections.sort(hours, new Comparator<Hour>() {
+                       @Override
+                       public int compare(Hour h1, Hour h2) {
+                           return (h2.getHours() - h1.getHours());
+                       }
+                   });
                     adapter.setHourArrayList((ArrayList<Hour>) hours);
                     progressBar.setVisibility(View.GONE);
                     //progressDialog.dismiss();
