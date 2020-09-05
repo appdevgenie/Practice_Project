@@ -36,7 +36,12 @@ public class LearnerSkillsRecyclerAdapter extends RecyclerView.Adapter<LearnerVi
 
         Skill skill = skillArrayList.get(holder.getAdapterPosition());
         holder.textName.setText(skill.getName());
-        holder.textInfo.setText(TextUtils.concat(String.valueOf(skill.getScore()), " skill IQ Score, ", skill.getCountry()));
+        holder.textInfo.setText(TextUtils.concat(
+                String.valueOf(skill.getScore()),
+                " ",
+                context.getString(R.string.skill_iq_score),
+                " ",
+                skill.getCountry()));
 
         Glide.with(context)
                 .load(skill.getBadgeUrl())

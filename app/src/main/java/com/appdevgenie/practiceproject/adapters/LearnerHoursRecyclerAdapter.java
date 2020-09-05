@@ -36,7 +36,12 @@ public class LearnerHoursRecyclerAdapter extends RecyclerView.Adapter<LearnerVie
 
         Hour hour = hourArrayList.get(holder.getAdapterPosition());
         holder.textName.setText(hour.getName());
-        holder.textInfo.setText(TextUtils.concat(String.valueOf(hour.getHours()), " learning hours, ", hour.getCountry()));
+        holder.textInfo.setText(TextUtils.concat(
+                String.valueOf(hour.getHours()),
+                " ",
+                context.getString(R.string.learning_hours),
+                " ",
+                hour.getCountry()));
 
         Glide.with(context)
                 .load(hour.getBadgeUrl())

@@ -144,10 +144,10 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
                 Log.d(TAG, "onResponse: " + response.toString());
                 if(response.isSuccessful()){
                     //success
-                    showResultDialog(R.drawable.ic_tick_green, "Submission successful");
+                    showResultDialog(R.drawable.ic_tick_green, getString(R.string.submission_successful));
                 }else{
                     //unsuccessful
-                    showResultDialog(R.drawable.ic_warning_red, "Submission not successful");
+                    showResultDialog(R.drawable.ic_warning_red, getString(R.string.submission_unsuccessful));
                 }
 
             }
@@ -155,7 +155,7 @@ public class ProjectSubmissionActivity extends AppCompatActivity implements View
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 //unsuccessful
-                showResultDialog(R.drawable.ic_warning_red, "Submission not successful");
+                showResultDialog(R.drawable.ic_warning_red, getString(R.string.submission_unsuccessful));
                 Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });

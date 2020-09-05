@@ -47,23 +47,21 @@
                 android:id="@+id/image_view_no_network"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:tint="@color/colorWhite"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/button_submit"
                 app:layout_constraintEnd_toEndOf="@+id/button_submit"
                 app:layout_constraintStart_toStartOf="@+id/button_submit"
                 app:layout_constraintTop_toTopOf="@+id/button_submit"
-                app:srcCompat="@drawable/ic_cloud_off" />
+                app:srcCompat="@drawable/ic_cloud_off"
+                app:tint="@color/colorWhite" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary" />
-
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -72,12 +70,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
